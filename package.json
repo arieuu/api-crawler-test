@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "dev": "npx nodemon src/server.ts"
+  },
+  "dependencies": {
+    "fastify": "^4.26.1"
+  }
+}
