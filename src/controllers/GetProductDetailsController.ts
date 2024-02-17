@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import GetProductDetailsService from "../services/GetProductDetailsService";
+import GetProductDetailsService from "../services/getProductsDetails/GetProductDetailsService";
+import accessProduct from "../services/getProductsDetails/steps/accessProduct";
 
 
 class GetProductsDetailController {
@@ -8,6 +9,8 @@ class GetProductsDetailController {
         const getProductDetailsService = new GetProductDetailsService();
 
         const product = await getProductDetailsService.execute(productId);
+
+        const productDetails = await accessProduct(productId);
 
         response.json(product)
     }
