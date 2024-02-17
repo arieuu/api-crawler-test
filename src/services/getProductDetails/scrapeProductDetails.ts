@@ -1,14 +1,14 @@
 import puppeteer, { Browser } from "puppeteer";
 
-async function accessProduct(productId: string) {
+async function scrapeProductDetails(productId: string) {
     console.log("Opening browser and going to product")
 
-    // First we start a browser instance and create a new page
+    // Step 1: First we start a browser instance and create a new page
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    await page.goto("https://br.openfoodfacts.org/" + productId);
+    await page.goto("https://br.openfoodfacts.org/produto/" + productId);
 
     console.log("Taking page screenshot")
 
@@ -17,6 +17,8 @@ async function accessProduct(productId: string) {
     console.log("Done")
 
     browser.close();
+
+    return page;
 }
 
-export default accessProduct;
+export default scrapeProductDetails;

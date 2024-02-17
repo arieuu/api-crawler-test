@@ -1,5 +1,4 @@
-
-
+import scrapeProductDetails from "./scrapeProductDetails";
 
 class GetProductDetailsService {
 
@@ -9,6 +8,8 @@ class GetProductDetailsService {
             "name": "potato",
             "status": "meh"
         }
+
+        const productDetails = await scrapeProductDetails(productId);
 
         return product;
     }
