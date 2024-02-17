@@ -1,7 +1,15 @@
+import { ParsedQs } from "qs";
+
+interface IFilterType {
+    nutrition: string | ParsedQs | string[] | ParsedQs[] | undefined
+    nova: string | ParsedQs | string[] | ParsedQs[] | undefined
+}
 
 class GetProductsService {
-    async execute() {
+    async execute({ nutrition, nova }: IFilterType) {
         const products = {
+            "nutrition": nutrition,
+            "nova": nova,
             "banana": "fresh",
             "peach": "rotten"
         }
