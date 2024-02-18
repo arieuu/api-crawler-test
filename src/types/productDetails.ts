@@ -1,3 +1,4 @@
+// Here we define the entire shape of the object we will be returning
 
 export interface IproductDetails {
     "title"?: string,
@@ -15,5 +16,8 @@ export interface Iingredients {
 
 export interface INutrition {
     "score"?: string,
-    "values"?: string[][]
+    "values"?: string[][],
+    "servingSize"?: string,
 }
+
+

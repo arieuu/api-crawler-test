@@ -25,7 +25,8 @@ async function scrapeProductDetails(productId: string) {
     let ingredientList: string[];
     let nutriScore;
     let nutritionValuesList: string[];
-    let nutritionValuesArray = []
+    let nutritionValuesArray = [];
+    let servingSize;
 
 
     // STEP 2: Scraping specific data for this product and save it to response object
@@ -160,6 +161,19 @@ async function scrapeProductDetails(productId: string) {
         "score": nutriScore.split(" ").pop(), // Getting just the letter of the score
         "values": nutritionValuesArray
     }
+
+
+    // Getting serving size
+
+    try {
+        servingSize = await page.$eval("#panel_serving_size_content > div > div > div", element => element.innerText);
+
+    } catch {
+        servingSize = "unknown";
+        console.log("No serving size, moving on....")
+    }
+
+    productDetailsResponse.nutrition.servingSize = servingSize.split(" ").pop();
 
     console.log(productDetailsResponse)
 
