@@ -18,6 +18,42 @@ export interface INutrition {
     "score"?: string,
     "values"?: string[][],
     "servingSize"?: string,
+    "data"?: ItableData,
 }
 
+export interface ItableData {
+    "Energia": {
+        "per100g": string,
+        "perServing": string
+    },
+
+    "Gorduras/lípidos": {
+        "per100g": string,
+        "perServing": string
+    },
+
+    "Carboidratos": {
+        "per100g": string,
+        "perServing": string
+    },
+
+    "Fibra alimentar": {
+        "per100g": string,
+        "perServing": string
+    },
+
+    "Proteínas": {
+        "per100g": string,
+        "perServing": string
+    },
+
+    "Sal": {
+        "per100g": string,
+        "perServing": string
+    }
+
+
+
+
+}
 
