@@ -26,11 +26,11 @@ async function scrapeProductDetails(productId: string) {
     let nutriScore;
 
 
-
     // STEP 2: Scraping specific data for this product and save it to response object
 
     try {
         productDetailsResponse.title = await page.$eval("#field_generic_name_value > span", element => element.innerText)
+
     } catch {
         productDetailsResponse.title = "";
         console.log("Title not found, moving on...");
@@ -38,15 +38,16 @@ async function scrapeProductDetails(productId: string) {
 
     try {
         productDetailsResponse.quantity = await page.$eval("#field_quantity_value", element => element.innerText)
+
     } catch {
         productDetailsResponse.quantity = "";
         console.log("Quantity not found, moving on...");
     }
 
     try {
-        const hasOil = await page.$eval("#panel_ingredients_analysis_en-palm-oil-free > li > a > h4", element => element.innerText)
-        const isVegan = await page.$eval("#panel_ingredients_analysis_en-vegan > li > a > h4", element => element.innerText);
-        const isVegetarian = await page.$eval("#panel_ingredients_analysis_en-vegetarian > li > a > h4", element => element.innerText);
+        hasOil = await page.$eval("ul[id^=panel_ingredients_analysis_en] > li > a > h4", element => element.innerText)
+        isVegan = await page.$eval("ul[id*=vegan] > li > a > h4", element => element.innerText);
+        isVegetarian = await page.$eval("ul[id*=vegetarian] > li > a > h4", element => element.innerText);
 
     } catch {
         console.log("Ingredient analysis not found, moving on...")
@@ -68,6 +69,7 @@ async function scrapeProductDetails(productId: string) {
 
     // palm oil
 
+    console.log(hasOil)
     if (hasOil == "Sem óleo de palma") {
         ingredients.hasPalmOil = "false"
 
@@ -93,13 +95,13 @@ async function scrapeProductDetails(productId: string) {
     // is vegetarian
 
     if (isVegetarian == "Vegetariano") {
-        ingredients.isVegan = "true"
+        ingredients.isVegetarian = "true"
 
     } else if(isVegetarian == "Não vegetariano") {
-        ingredients.isVegan = "false";
+        ingredients.isVegetarian = "false";
 
     } else {
-        ingredients.isVegan = "unknown"
+        ingredients.isVegetarian = "unknown"
     }
 
     // Ingredient list
