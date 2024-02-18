@@ -1,4 +1,7 @@
 import puppeteer, { Browser } from "puppeteer";
+import IproductDetails from "../../types/productDetails";
+
+
 
 async function scrapeProductDetails(productId: string) {
     console.log("Opening browser and going to product")
@@ -10,15 +13,23 @@ async function scrapeProductDetails(productId: string) {
 
     await page.goto("https://br.openfoodfacts.org/produto/" + productId);
 
-    console.log("Taking page screenshot")
+    console.log("Getting specific data from the page");
 
-    await page.screenshot({ type: 'jpeg', path: './screenshot.jpeg', fullPage: true });
+
+    // Step 2: Scraping specific data for this product and save it to response object
+
+    let productDetails:IproductDetails = {};
+
+    productDetails.title = await page.$eval("#field_generic_name_value > span", element => element.innerText)
+    productDetails.quantity = await page.$eval("#field_quantity_value", element => element.innerText)
+
+    console.log(productDetails)
 
     console.log("Done")
 
     browser.close();
 
-    return page;
+    return productDetails;
 }
 
 export default scrapeProductDetails;
