@@ -6,7 +6,7 @@ import { IproductDetails, Iingredients } from "../../types/productDetails";
 async function scrapeProductDetails(productId: string) {
     console.log("Opening browser and going to product")
 
-    // STEP 1: First we start a browser instance and create a new page
+    // STEP 1: Start a browser instance and create a new page
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -16,41 +16,116 @@ async function scrapeProductDetails(productId: string) {
     console.log("Getting specific data from the page");
 
 
+    // Placeholder variables and objects
+
+    let productDetailsResponse:IproductDetails = {}
+    let hasOil;
+    let isVegan;
+    let isVegetarian;
+    let ingredientList: string[];
+    let nutriScore;
+
+
+
     // STEP 2: Scraping specific data for this product and save it to response object
 
-    // Placeholder response object 
+    try {
+        productDetailsResponse.title = await page.$eval("#field_generic_name_value > span", element => element.innerText)
+    } catch {
+        productDetailsResponse.title = "";
+        console.log("Title not found, moving on...");
+    }
 
-    let productDetails:IproductDetails = {};
+    try {
+        productDetailsResponse.quantity = await page.$eval("#field_quantity_value", element => element.innerText)
+    } catch {
+        productDetailsResponse.quantity = "";
+        console.log("Quantity not found, moving on...");
+    }
 
-    productDetails.title = await page.$eval("#field_generic_name_value > span", element => element.innerText)
-    productDetails.quantity = await page.$eval("#field_quantity_value", element => element.innerText)
+    try {
+        const hasOil = await page.$eval("#panel_ingredients_analysis_en-palm-oil-free > li > a > h4", element => element.innerText)
+        const isVegan = await page.$eval("#panel_ingredients_analysis_en-vegan > li > a > h4", element => element.innerText);
+        const isVegetarian = await page.$eval("#panel_ingredients_analysis_en-vegetarian > li > a > h4", element => element.innerText);
 
-    const hasOil = await page.$eval("#panel_ingredients_analysis_en-palm-oil-free > li > a > h4", element => element.innerText)
-    const isVegan = await page.$eval("#panel_ingredients_analysis_en-vegan > li > a > h4", element => element.innerText);
-    const isVegetarian = await page.$eval("#panel_ingredients_analysis_en-vegetarian > li > a > h4", element => element.innerText);
+    } catch {
+        console.log("Ingredient analysis not found, moving on...")
+    }
 
-    const ingredientList = await page.$$eval("#panel_ingredients_content > div", elements => elements.map(element => {
-        return element.querySelector(".panel_text").innerText
-    }))
+    try {
+        ingredientList = await page.$$eval("#panel_ingredients_content > div", elements => elements.map(element => {
+            return element.querySelector(".panel_text").innerText
+        }))
+
+    } catch {
+        ingredientList = [];
+        console.log("Ingredient list not found, moving on...")
+    }
 
     let ingredients: Iingredients = {};
 
-    // Setting actual values 
+    // Setting actual values for ingredient analysis
 
-    ingredients.hasPalmOil = hasOil == "Sem óleo de palma" ? false : true;
-    ingredients.isVegan = isVegan == "Vegano" ? true : false;
-    ingredients.isVegetarian = isVegetarian == "Vegetariano" ? true : false;
+    // palm oil
+
+    if (hasOil == "Sem óleo de palma") {
+        ingredients.hasPalmOil = "false"
+
+    } else if(hasOil == "Óleo de palma") {
+        ingredients.hasPalmOil = "true"
+
+    } else {
+        ingredients.hasPalmOil = "unknown"
+    }
+
+    // is vegan
+
+    if (isVegan == "Vegano") {
+        ingredients.isVegan = "true"
+
+    } else if(isVegan == "Não vegano") {
+        ingredients.isVegan = "false";
+
+    } else {
+        ingredients.isVegan = "unknown"
+    }
+
+    // is vegetarian
+
+    if (isVegetarian == "Vegetariano") {
+        ingredients.isVegan = "true"
+
+    } else if(isVegetarian == "Não vegetariano") {
+        ingredients.isVegan = "false";
+
+    } else {
+        ingredients.isVegan = "unknown"
+    }
+
+    // Ingredient list
+
     ingredients.list = ingredientList;
 
-    productDetails.ingredients = ingredients
+    productDetailsResponse.ingredients = ingredients
 
-    console.log(productDetails)
+    // Getting nutriscore
+
+    try {
+        nutriScore = await page.$eval("#attributes_grid > li:nth-child(1) > a > div > div > div.attr_text > h4", element => element.innerText);
+
+    } catch {
+        console.log("No nutriscore, moving on....")
+    }
+
+    console.log(nutriScore)
+
+    console.log(productDetailsResponse)
 
     console.log("Done")
 
     browser.close();
 
-    return productDetails;
+    return productDetailsResponse;
 }
 
 export default scrapeProductDetails;
