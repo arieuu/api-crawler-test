@@ -1,14 +1,13 @@
 
-interface IproductDetails {
+export interface IproductDetails {
     "title"?: string,
     "quantity"?: string,
-
-    "ingredients"?: {
-        "hasPalmOil": string,
-        "isVegan": boolean,
-        "isVegetarian": boolean,
-        "list": string[]
-    }
+    "ingredients"?: Iingredients,
 }
 
-export default IproductDetails;
+export interface Iingredients {
+    "hasPalmOil"?: boolean,
+    "isVegan"?: boolean,
+    "isVegetarian"?: boolean,
+    "list"?: string[]
+}
