@@ -43,6 +43,11 @@ async function scrapeProductDetails(productId: string) {
     let salPer100g;
     let salPerServing;
 
+    // Nova
+
+    let novaScore;
+    let novaTitle;
+
 
     // STEP 2: Scraping specific data for this product and save it to response object
 
@@ -242,6 +247,30 @@ async function scrapeProductDetails(productId: string) {
         }
     }
 
+
+    // Getting nova score
+
+    try {
+        novaScore = await page.$eval("#attributes_grid > li:nth-child(2) > a > div > div > div.attr_text > h4", element => element.innerText);
+
+    } catch {
+        console.log("No Nova score was found, moving on...")
+    }
+
+    // Nova title
+
+    try {
+        novaTitle = await page.$eval("#attributes_grid > li:nth-child(2) > a > div > div > div.attr_text > span", element => element.innerText);
+        if(novaTitle.includes("Nível desconhecido")) novaTitle = "unknown";
+
+    } catch {
+        console.log("No Nova title was found, moving on...")
+    }
+
+    productDetailsResponse.nova = {
+        "score": parseInt(novaScore.split(" ").pop()),
+        "title": novaTitle
+    }
     console.log(productDetailsResponse)
 
     console.log("Done")

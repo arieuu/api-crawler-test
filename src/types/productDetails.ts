@@ -5,6 +5,10 @@ export interface IproductDetails {
     "quantity"?: string,
     "ingredients"?: Iingredients,
     "nutrition"?: INutrition,
+    "nova"?: {
+        "score": number,
+        "title": string
+    }
 }
 
 export interface Iingredients {
