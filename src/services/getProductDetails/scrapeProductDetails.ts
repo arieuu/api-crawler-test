@@ -24,6 +24,8 @@ async function scrapeProductDetails(productId: string) {
     let isVegetarian;
     let ingredientList: string[];
     let nutriScore;
+    let nutritionValuesList: string[];
+    let nutritionValuesArray = []
 
 
     // STEP 2: Scraping specific data for this product and save it to response object
@@ -110,6 +112,8 @@ async function scrapeProductDetails(productId: string) {
 
     productDetailsResponse.ingredients = ingredients
 
+
+    
     // Getting nutriscore
 
     try {
@@ -119,7 +123,43 @@ async function scrapeProductDetails(productId: string) {
         console.log("No nutriscore, moving on....")
     }
 
+    // Getting list of nutrients
+
+    try {
+        nutritionValuesList = await page.$$eval("#panel_nutrient_levels_content > div > ul", elements => elements.map(element => {
+            return element.querySelector(".evaluation__title").innerText
+        }))
+
+    } catch {
+        nutritionValuesList = []
+        console.log("no nutrition val")
+    }
+
+    for (const nutritionValue of nutritionValuesList) {
+        let arr = []
+
+        if(nutritionValue.includes("quantidade baixa")) {
+            arr.push("low");
+
+        } else if (nutritionValue.includes("quantidade moderada")) {
+            arr.push("moderate");
+
+        } else if(nutritionValue.includes("quantidade elevada")) {
+            arr.push("high");
+        }
+
+        arr.push(nutritionValue)
+
+        nutritionValuesArray.push(arr)
+    }
+
+    console.log(nutritionValuesArray)
     console.log(nutriScore)
+   
+    productDetailsResponse.nutrition = {
+        "score": nutriScore.split(" ").pop(), // Getting just the letter of the score
+        "values": nutritionValuesArray
+    }
 
     console.log(productDetailsResponse)
 

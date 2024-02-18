@@ -14,6 +14,6 @@ export interface Iingredients {
 }
 
 export interface INutrition {
-    "score?": string,
-    "values?": [][]
+    "score"?: string,
+    "values"?: string[][]
 }
