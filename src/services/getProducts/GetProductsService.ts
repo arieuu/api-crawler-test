@@ -1,19 +1,17 @@
-import { ParsedQs } from "qs";
+import IFilterType from "../../types/filter";
+import scrapeProducts from "./scrapeProducts";
 
-interface IFilterType {
-    nutrition: string | ParsedQs | string[] | ParsedQs[] | undefined
-    nova: string | ParsedQs | string[] | ParsedQs[] | undefined
-}
 
 class GetProductsService {
     async execute({ nutrition, nova }: IFilterType) {
-        const products = {
+        const r = {
             "nutrition": nutrition,
             "nova": nova,
             "banana": "fresh",
             "peach": "rotten"
         }
 
+        const products = await scrapeProducts({ nutrition, nova })
         return products;
     }
 

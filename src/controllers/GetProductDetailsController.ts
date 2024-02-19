@@ -9,7 +9,7 @@ class GetProductsDetailController {
 
         const product = await getProductDetailsService.execute(productId);
 
-        response.json(product)
+        return response.json(product)
     }
 
 }
