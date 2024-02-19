@@ -48,11 +48,22 @@ async function scrapeProductDetails(productId: string) {
     let novaScore;
     let novaTitle;
 
+    try {
+        const doesProductExist = await page.$eval("#main_column > div > div > h1", element => element.innerText)
+
+        if(doesProductExist == "Erro") {
+            console.log("Product doens't exist");
+            console.log("Done")
+            return { Error: "Product doesn't exist" }
+        }
+    } catch {
+    }
+
 
     // STEP 2: Scraping specific data for this product and save it to response object
 
     try {
-        productDetailsResponse.title = await page.$eval("#field_generic_name_value > span", element => element.innerText)
+        productDetailsResponse.title = await page.$eval("#product > div > div > div.card-section > div > div.medium-8.small-12.columns > h2", element => element.innerText)
 
     } catch {
         productDetailsResponse.title = "";
@@ -217,8 +228,8 @@ async function scrapeProductDetails(productId: string) {
 
     productDetailsResponse.nutrition.data = {
         "Energia": {
-            "per100g": energiaPer100g,
-            "perServing": energiaPerServing
+            "per100g": energiaPer100g.replace(/\r?\n/g, " "),
+            "perServing": energiaPerServing.replace(/\r?\n/g, " ")
         },
 
         "Gorduras/lípidos": {
