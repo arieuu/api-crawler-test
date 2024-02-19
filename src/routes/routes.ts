@@ -17,7 +17,7 @@ router.get("/products/:productId", getProductsDetailController.handle) // Route 
  * @swagger
  * tags:
  *   - name: Products  
- *     descritpion: Interact with products 
+ *     description: Interact with products 
  */
 
 
