@@ -8,7 +8,6 @@ import router from "./routes/routes";
 // Setting up swagger
 
 
-
 const app = express();
 
 app.get("/", (request: Request, response: Response) => {
@@ -24,18 +23,18 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "LogRocket Express API with Swagger",
-      version: "0.1.0",
+      title: "Openfoods scraper bot",
+      version: "1.0.0",
       description:
-        "This is a simple CRUD API application made with Express and documented with Swagger",
+        "This is a bot to scrape products off of the openfoods website (its for a test)",
       license: {
         name: "MIT",
         url: "https://spdx.org/licenses/MIT.html",
       },
       contact: {
-        name: "LogRocket",
-        url: "https://logrocket.com",
-        email: "info@email.com",
+        name: "Ariel Carvalho",
+        url: "https://arielcarvalho.io",
+        email: "arieljanickcarvalho@gmail.com",
       },
     },
     servers: [
@@ -48,11 +47,8 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs)
-);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 
 app.listen(3000, () => {
