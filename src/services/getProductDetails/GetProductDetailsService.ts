@@ -1,4 +1,4 @@
-import scrapeProductDetails from "./scrapeProductDetails";
+import scrapeProductDetails from "./getProductDetailsScraper";
 
 class GetProductDetailsService {
 

@@ -1,8 +1,7 @@
 import puppeteer from "puppeteer";
 import IFilterType from "../../types/filter";
-import { IProduct } from "../../types/product";
-import scrapeAllProducts from "./steps/4-scraping-all-products";
 import checkIfProducts from "./steps/3-check-if-products";
+import scrapeAllProducts from "./steps/4-scraping-all-products";
 import setNovaNutrition from "./steps/5-setting-nova-and-nutrition";
 
 
