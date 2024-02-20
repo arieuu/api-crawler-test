@@ -1,5 +1,6 @@
-
-import express from "express";
+import "express-async-errors" // package to return errors as json. Make sure to import it first
+import express, { NextFunction } from "express";
+import { Request, Response } from "express";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import router from "./routes/products";
@@ -38,6 +39,20 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(router); // Get the routes
 
+
+ // Return all errors to the API as a bad request instead of the console
+app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+  if(err instanceof Error) {
+      return response.status(400).json({Error: err.message});
+  }
+
+  // In case something else goes terribly wrong return an internal server error
+  return response.status(500).json({
+      status: "Server error",
+      message: "Internal server Error"
+  });
+
+});
 
 // Start up server
 
