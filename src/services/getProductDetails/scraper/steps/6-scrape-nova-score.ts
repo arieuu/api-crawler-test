@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import { IproductDetails } from "../../../types/productDetails";
+import { IproductDetails } from "../../../../model/productDetails";
 
 
 

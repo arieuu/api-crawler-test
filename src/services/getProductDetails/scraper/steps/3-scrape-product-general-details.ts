@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import { Iingredients, IproductDetails } from "../../../types/productDetails";
+import { Iingredients, IproductDetails } from "../../../../model/productDetails";
 
 
 async function scrapeProductGeneralDetails(page: Page, productDetailsResponse: IproductDetails) {
@@ -15,7 +15,7 @@ async function scrapeProductGeneralDetails(page: Page, productDetailsResponse: I
 
     
     try {
-        productDetailsResponse.title = await page.$eval("#product > div > div > div.card-section > div > div.medium-8.small-12.columns > h2", element => element.innerText)
+        productDetailsResponse.title = await page.$eval("h2.title-1", element => element.innerText)
 
     } catch {
         productDetailsResponse.title = "";

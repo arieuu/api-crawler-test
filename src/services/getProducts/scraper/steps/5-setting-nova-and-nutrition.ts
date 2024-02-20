@@ -1,5 +1,5 @@
-import IFilterType from "../../../types/filter"
-import { IProduct } from "../../../types/product"
+import IFilterType from "../../../../model/filter"
+import { IProduct } from "../../../../model/product"
 
 
 async function setNovaNutrition(products: IProduct[], { nova, nutrition }: IFilterType) {

@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { IproductDetails } from "../../types/productDetails";
+import { IproductDetails } from "../../../model/productDetails";
 import checkIfProduct from "./steps/2-check-if-product";
 import scrapeProductGeneralDetails from "./steps/3-scrape-product-general-details";
 import scrapeNutritionScore from "./steps/4-scrape-nutrition-score";

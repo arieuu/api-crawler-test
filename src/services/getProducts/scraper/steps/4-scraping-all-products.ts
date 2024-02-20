@@ -1,5 +1,5 @@
 import { Page } from "puppeteer"
-import { IProduct } from "../../../types/product";
+import { IProduct } from "../../../../model/product";
 
 
 async function scrapeAllProducts(page: Page) {
