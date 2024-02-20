@@ -14,6 +14,12 @@ class GetProductsController {
 
         const products = await getProductsService.execute({ nutrition, nova });
 
+        if(products instanceof Error) {
+            response.status(404);
+            response.json(products.message);
+
+        } 
+        
         response.status(200)
         return response.json(products)
     }

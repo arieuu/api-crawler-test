@@ -26,7 +26,7 @@ async function scrapeProductDetails(productId: string) {
 
     // STEP 2: Check if the products exist
 
-    if(await checkIfProduct(page)) return { error: "Product doesn't exist" }
+    if(await checkIfProduct(page)) return new Error("Product not found");
 
 
     // STEP 3: Scraping product general detail

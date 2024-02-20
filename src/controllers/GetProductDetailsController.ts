@@ -9,7 +9,14 @@ class GetProductsDetailController {
 
         const product = await getProductDetailsService.execute(productId);
 
-        return response.json(product)
+        if(product instanceof Error) {
+            response.status(404);
+            response.json(product.message);
+
+        } 
+
+        response.status(200);
+        return response.json(product);
     }
 
 }

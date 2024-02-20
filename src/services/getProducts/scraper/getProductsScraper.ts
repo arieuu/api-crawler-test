@@ -25,7 +25,7 @@ async function scrapeProducts({ nova, nutrition }: IFilterType) {
 
     // STEP 3: Checking if there are any products to scrape in the page
 
-    if ( await checkIfProducts(page)) return { error: "No products found"}
+    if ( await checkIfProducts(page)) return new Error("No products found");
 
 
     // STEP 4:  Scraping all products
