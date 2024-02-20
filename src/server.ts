@@ -1,23 +1,11 @@
 
-import express, { Request, Response } from "express";
+import express from "express";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import router from "./routes/routes";
+import router from "./routes/products";
 
 
 // Setting up swagger
-
-
-const app = express();
-
-app.get("/", (request: Request, response: Response) => {
-    response.json({ message: "received"});
-});
-
-
-app.use(router); // Get the routes
-
-
 
 const options = {
   definition: {
@@ -27,10 +15,6 @@ const options = {
       version: "1.0.0",
       description:
         "Data api that scrapes products off of the openfoods website and returns the data",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
       contact: {
         name: "Ariel Carvalho",
         url: "https://arielcarvalho.io",
@@ -48,8 +32,14 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+const app = express();
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
+app.use(router); // Get the routes
+
+
+// Start up server
 
 app.listen(3000, () => {
     console.log("Listeninig on port 3000");

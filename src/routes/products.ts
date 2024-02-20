@@ -4,14 +4,15 @@ import GetProductsDetailController from "../controllers/GetProductDetailsControl
 
 const router = Router();
 
-
-
-
 const getProductsController = new GetProductsController();
 const getProductsDetailController = new GetProductsDetailController();
 
 router.get("/products", getProductsController.handle) // Route with parameters
 router.get("/products/:productId", getProductsDetailController.handle) // Route with specific id
+
+export default router;
+
+// Swagger documentation
 
 /**
  * @swagger
@@ -23,7 +24,7 @@ router.get("/products/:productId", getProductsDetailController.handle) // Route 
 
 // Models
 
-// Product summarized
+// Product small
 
 /**
  * @swagger
@@ -99,8 +100,6 @@ router.get("/products/:productId", getProductsDetailController.handle) // Route 
  */
 
 
-
-
 // ROUTES
 
 // all products
@@ -169,4 +168,3 @@ router.get("/products/:productId", getProductsDetailController.handle) // Route 
  *         description: Internal server error
  *
  */
-export default router;

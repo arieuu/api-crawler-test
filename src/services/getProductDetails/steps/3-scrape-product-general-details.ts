@@ -6,12 +6,14 @@ async function scrapeProductGeneralDetails(page: Page, productDetailsResponse: I
 
     console.log("Scraping general details of product");
 
+    // Setting the variables
+
     let hasOil;
     let isVegan;
     let isVegetarian; 
     let ingredientList: string[];
 
-
+    
     try {
         productDetailsResponse.title = await page.$eval("#product > div > div > div.card-section > div > div.medium-8.small-12.columns > h2", element => element.innerText)
 
