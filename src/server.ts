@@ -26,7 +26,7 @@ const options = {
       title: "Openfoods scraper bot",
       version: "1.0.0",
       description:
-        "This is a bot to scrape products off of the openfoods website (its for a test)",
+        "Data api that scrapes products off of the openfoods website and returns the data",
       license: {
         name: "MIT",
         url: "https://spdx.org/licenses/MIT.html",

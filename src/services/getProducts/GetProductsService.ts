@@ -1,5 +1,5 @@
 import IFilterType from "../../types/filter";
-import scrapeProducts from "./scrapeProducts";
+import scrapeProducts from "./getProductsScraper";
 
 
 class GetProductsService {
