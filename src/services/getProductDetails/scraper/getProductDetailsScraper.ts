@@ -51,8 +51,6 @@ async function scrapeProductDetails(productId: string) {
     
     // Done scraping
 
-    console.log(productDetailsResponse)
-
     console.log("Done")
 
     browser.close();

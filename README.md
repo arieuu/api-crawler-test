@@ -17,7 +17,7 @@ npm run dev
 
 ## Documentation
 
-The complete documentation for this api (including all routes, models and response shape) can be found
+The complete documentation for this api (including all routes, models and shape of response) can be found
 here once the project is running:
 
 http://localhost:3000/api-docs/

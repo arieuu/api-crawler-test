@@ -8,7 +8,7 @@ import setNovaNutrition from "./steps/5-setting-nova-and-nutrition";
 
 async function scrapeProducts({ nova, nutrition }: IFilterType) {
 
-    console.log("Opening a headless browser")
+    console.log("Opening a headless browser");
 
 
     // STEP 1: Start a browser instance and create a new page
@@ -19,7 +19,8 @@ async function scrapeProducts({ nova, nutrition }: IFilterType) {
 
     // STEP 2: Changing to products page with filters applied
 
-    console.log("Loading products page with filters applied")
+    console.log("Loading products page with filters applied");
+
     await page.goto("https://br.openfoodfacts.org/nutrition-grade/" + nutrition + "/nova-group/" + nova);
 
 
@@ -30,16 +31,14 @@ async function scrapeProducts({ nova, nutrition }: IFilterType) {
 
     // STEP 4:  Scraping all products
 
-    const products = await scrapeAllProducts(page)
+    const products = await scrapeAllProducts(page);
 
 
     // STEP 5: Setting nova score and nutrition scores to final return object
 
-    await setNovaNutrition(products, { nova, nutrition })
+    await setNovaNutrition(products, { nova, nutrition });
 
-    console.log(products)
-
-    console.log("done")
+    console.log("Done");
 
     browser.close();
 
